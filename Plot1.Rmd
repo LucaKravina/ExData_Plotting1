@@ -1,0 +1,45 @@
+---
+title: "Week1_def"
+author: "K"
+date: "24/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+1) Change Data and Time
+2) Subset data
+3) Change classes as numeric
+
+```{r cars}
+hpc <- read.csv("household_power_consumption.txt", sep = ";", stringsAsFactors = FALSE)
+
+#1
+hpc$Date <- as.Date(hpc$Date, format = "%d/%m/%Y")
+hpc$DateTime <- strptime(paste(hpc$Date,hpc$Time),
+                                 format = "%Y-%m-%d %H:%M:%S")
+#2
+hpc <- hpc[hpc$Date >= "2007-2-1" & hpc$Date <= "2007-2-2",]
+
+#3
+hpc[,3] <- as.numeric(hpc[,3])
+hpc[,4] <- as.numeric(hpc[,4])
+hpc[,5] <- as.numeric(hpc[,5])
+hpc[,6] <- as.numeric(hpc[,6])
+hpc[,7] <- as.numeric(hpc[,7])
+hpc[,8] <- as.numeric(hpc[,8])
+```
+
+## Plot1
+
+```{r Plot1}
+png("Plot1.png", width=480, height=480)
+with(hpc, hist(Global_active_power, xlab = "Global Active Power (kilowatts)",
+                       col = "red", main = "Global Active Power"))
+dev.off() 
+```
+
